@@ -65,6 +65,23 @@ export function App() {
     }
   };
 
+  const updateTask = async (updatedTask) => {
+    try {
+      const editedResponse = await axios.put(`http://localhost:1111/tasks`, {
+        updatedTask,
+      });
+      console.log("Task updated:", editedResponse.data);
+
+      const getResponse = await axios.get("http://localhost:1111/tasks");
+      dispatch({
+        type: "getTaskList",
+        tasks: getResponse.data,
+      });
+    } catch (err) {
+      console.log("Error editing task: ", err);
+    }
+  };
+
   const addTaskBtn = () => {
     dispatch({
       type: "addTaskBtn",
@@ -113,7 +130,11 @@ export function App() {
         <h4>Zero task added</h4>
       ) : (
         state.taskList.map((task) => (
-          <TaskCard {...task} deleteTask={deleteTask}></TaskCard>
+          <TaskCard
+            {...task}
+            deleteTask={deleteTask}
+            updateTask={updateTask}
+          ></TaskCard>
         ))
       )}
     </>

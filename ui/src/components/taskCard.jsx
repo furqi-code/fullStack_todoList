@@ -9,6 +9,7 @@ export function TaskCard({
   created_at,
   updated_at,
   deleteTask,
+  updateTask
 }) {
   const [isEditing, setisEditing] = useState(false);
   const [isUpdated, setisUpdated] = useState(false);
@@ -96,7 +97,25 @@ export function TaskCard({
               >
                 cancel
               </button>
-              <button type="button" className="canvaBtn btn-save">
+              <button
+                type="button"
+                className="canvaBtn btn-save"
+                onClick={() => {
+                  const title = titleRef.current.value;
+                  const description = descriptionRef.current.value;
+                  updateTask({
+                    task_id,
+                    title,
+                    description,
+                    status: "just now",
+                    created_at,
+                    dueDate,
+                    updated_at: new Date().toISOString().split("T")[0],
+                  });
+                  setisEditing(false);
+                  setisUpdated(true);
+                }}
+              >
                 💾 save
               </button>
             </>
