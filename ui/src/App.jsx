@@ -48,6 +48,23 @@ export function App() {
     }
   };
 
+  const deleteTask = async (task_id) => {
+    try {
+      const deleteResponse = await axios.delete(
+        `http://localhost:1111/tasks?task_id=${task_id}`
+      );
+      console.log("Task deleted:", deleteResponse.data);
+
+      const getResponse = await axios.get("http://localhost:1111/tasks");
+      dispatch({
+        type: "getTaskList",
+        tasks: getResponse.data,
+      });
+    } catch (err) {
+      console.log("Error deleting task: ", err);
+    }
+  };
+
   const addTaskBtn = () => {
     dispatch({
       type: "addTaskBtn",
@@ -95,7 +112,9 @@ export function App() {
       {state.taskList.length === 0 ? (
         <h4>Zero task added</h4>
       ) : (
-        state.taskList.map((task) => <TaskCard {...task}></TaskCard>)
+        state.taskList.map((task) => (
+          <TaskCard {...task} deleteTask={deleteTask}></TaskCard>
+        ))
       )}
     </>
   );

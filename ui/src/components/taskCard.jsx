@@ -8,6 +8,7 @@ export function TaskCard({
   dueDate,
   created_at,
   updated_at,
+  deleteTask,
 }) {
   const [isEditing, setisEditing] = useState(false);
   const [isUpdated, setisUpdated] = useState(false);
@@ -77,7 +78,11 @@ export function TaskCard({
               >
                 Edit
               </button>
-              <button type="button" className="canvaBtn btn-delete">
+              <button
+                type="button"
+                className="canvaBtn btn-delete"
+                onClick={() => deleteTask(task_id)}
+              >
                 Delete
               </button>
             </>
