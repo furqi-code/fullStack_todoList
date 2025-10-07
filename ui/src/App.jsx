@@ -2,6 +2,7 @@ import { useEffect, useReducer } from "react";
 import { TaskInput } from "./components/task_input";
 import { TaskCard } from "./components/taskCard";
 import axios from "axios";
+import { Header } from "./components/header";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -30,6 +31,7 @@ export function App() {
     taskList: [],
     showTaskForm: false,
   });
+  let content;
 
   const addTask = async (task) => {
     try {
@@ -63,13 +65,14 @@ export function App() {
     } catch (err) {
       console.log("Error editing task: ", err);
     }
-  };			
+  };
 
   const deleteTask = async (task_id) => {
     try {
-      const deleteResponse = await axios.delete(
-        `http://localhost:1111/tasks?task_id=${task_id}`
-      );
+      const url = task_id
+        ? `http://localhost:1111/tasks?task_id=${task_id}`
+        : `http://localhost:1111/tasks`;
+      const deleteResponse = await axios.delete(url);
       console.log("Task deleted:", deleteResponse.data);
 
       const getResponse = await axios.get("http://localhost:1111/tasks");
@@ -81,7 +84,6 @@ export function App() {
       console.log("Error deleting task: ", err);
     }
   };
-
 
   const addTaskBtn = () => {
     dispatch({
@@ -110,34 +112,33 @@ export function App() {
       });
   }, []);
 
-  return (
-    <>
-      <div>
-        <button
-          className="m-4 p-4 text-end rounded-lg bg-yellow-200 text-gray-900 font-semibold shadow-sm hover:bg-green-300"
-          onClick={addTaskBtn}
-        >
-          add Task
-        </button>
-      </div>
-      <div style={{ width: "400px" }}>
-        <TaskInput
-          showTaskForm={state.showTaskForm}
-          setTaskform={setTaskform}
-          addTask={addTask}
-        ></TaskInput>
-      </div>
-      {state.taskList.length === 0 ? (
+  if (state.showTaskForm) {
+    content = (
+      <TaskInput
+        showTaskForm={state.showTaskForm}
+        setTaskform={setTaskform}
+        addTask={addTask}
+      ></TaskInput>
+    );
+  } else {
+    content =
+      state.taskList.length === 0 ? (
         <h4>Zero task added</h4>
       ) : (
         state.taskList.map((task) => (
           <TaskCard
             {...task}
             deleteTask={deleteTask}
-            updateTask={updateTask}	
+            updateTask={updateTask}
           ></TaskCard>
         ))
-      )}
+      );
+  }
+
+  return (
+    <>
+      <Header addTaskBtn={addTaskBtn} deleteTask={deleteTask}></Header>
+      <div>{content}</div>
     </>
   );
 }

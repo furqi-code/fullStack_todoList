@@ -52,7 +52,8 @@ app.post("/tasks", async (req, res) => {
 
 app.patch("/tasks", async (req, res) => {
   try {
-    const { task_id, title, description, status, updated_at } = req.body.updatedTask;
+    const { task_id, title, description, status, updated_at } =
+      req.body.updatedTask;
     let editedTask = await executeQuery(
       `update tasks set title = ?, description = ?, status = ?, updated_at = ? where task_id = ?`,
       [title, description, status, updated_at, task_id]
@@ -76,21 +77,21 @@ app.patch("/tasks", async (req, res) => {
 
 app.delete("/tasks", async (req, res) => {
   try {
-    await executeQuery(`DELETE FROM tasks WHERE task_id = ${req.query.task_id}`);
-    res.status(200).send({
-      message: "task deleted from DB",
-    });
+    const task_id = req.query.task_id;
+    if (task_id) {
+      await executeQuery(`DELETE FROM tasks WHERE task_id = ?`, [task_id]);
+      res.status(200).send({message: `task ${task_id} deleted from DB`,});
+    } else {
+      await executeQuery(`DELETE FROM tasks`);
+      res.status(200).send({ message: "All tasks deleted successfully." });
+    }
   } catch (err) {
     console.log("error while inserting tasks: ", err);
     res.status(401).send({
       message: err.message ? err.message : "Something went wrong",
     });
   }
-  res.send({
-    message: `task_id ${req.query.task_id} deleted succesfully`,
-  });
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);

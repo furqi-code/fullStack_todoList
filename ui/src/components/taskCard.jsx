@@ -9,7 +9,7 @@ export function TaskCard({
   created_at,
   updated_at,
   deleteTask,
-  updateTask
+  updateTask,
 }) {
   const [isEditing, setisEditing] = useState(false);
   const [isUpdated, setisUpdated] = useState(false);
@@ -59,11 +59,17 @@ export function TaskCard({
             <span className="todo-status status-in-progress">{status}</span>
           </div>
           <div className="d-flex flex-column align-items-end">
-            <span className="todo-date">Due: {due_date.split("T")[0]}</span>
+            <span className="todo-date">
+              Due: {due_date && due_date.split("T")[0]}
+            </span>
             {isUpdated && (
               <>
-                <span className="todo-date">Edited: {updated_at.split("T")[0]}</span>
-                <span className="todo-date">Created: {created_at.split("T")[0]}</span>
+                {/* <span className="todo-date">
+                  Edited: {updated_at && updated_at.split("T")[0]}
+                </span>
+                <span className="todo-date">
+                  Created: {created_at.split("T")[0]}
+                </span> */}
               </>
             )}
           </div>
@@ -107,7 +113,7 @@ export function TaskCard({
                     task_id,
                     title,
                     description,
-                    status: 'just now',
+                    status: "just now",
                     updated_at: new Date().toISOString().split("T")[0],
                   });
                   setisEditing(false);
