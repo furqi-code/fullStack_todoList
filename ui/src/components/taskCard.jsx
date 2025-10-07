@@ -82,7 +82,7 @@ export function TaskCard({
               <button
                 type="button"
                 className="canvaBtn btn-delete"
-                // onClick={() => deleteTask(task_id)}
+                onClick={() => deleteTask(task_id)}
               >
                 Delete
               </button>

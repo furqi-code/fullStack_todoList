@@ -50,6 +50,23 @@ app.post("/tasks", async (req, res) => {
   });
 });
 
+app.delete("/tasks", async (req, res) => {
+  try {
+    await executeQuery(`DELETE FROM tasks WHERE task_id = ${req.query.task_id}`);
+    res.status(200).send({
+      message: "task deleted from DB",
+    });
+  } catch (err) {
+    console.log("error while inserting tasks: ", err);
+    res.status(401).send({
+      message: err.message ? err.message : "Something went wrong",
+    });
+  }
+  res.send({
+    message: `task_id ${req.query.task_id} deleted succesfully`,
+  });
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
