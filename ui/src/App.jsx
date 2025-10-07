@@ -48,39 +48,6 @@ export function App() {
     }
   };
 
-  const deleteTask = async (task_id) => {
-    try {
-      const deleteResponse = await axios.delete(
-        `http://localhost:1111/tasks?task_id=${task_id}`
-      );
-      console.log("Task deleted:", deleteResponse.data);
-
-      const getResponse = await axios.get("http://localhost:1111/tasks");
-      dispatch({
-        type: "getTaskList",
-        tasks: getResponse.data,
-      });
-    } catch (err) {
-      console.log("Error deleting task: ", err);
-    }
-  };
-
-  const updateTask = async (updatedTask) => {
-    try {
-      const editedResponse = await axios.put(`http://localhost:1111/tasks`, {
-        updatedTask,
-      });
-      console.log("Task updated:", editedResponse.data);
-
-      const getResponse = await axios.get("http://localhost:1111/tasks");
-      dispatch({
-        type: "getTaskList",
-        tasks: getResponse.data,
-      });
-    } catch (err) {
-      console.log("Error editing task: ", err);
-    }
-  };
 
   const addTaskBtn = () => {
     dispatch({
@@ -132,8 +99,6 @@ export function App() {
         state.taskList.map((task) => (
           <TaskCard
             {...task}
-            deleteTask={deleteTask}
-            updateTask={updateTask}
           ></TaskCard>
         ))
       )}

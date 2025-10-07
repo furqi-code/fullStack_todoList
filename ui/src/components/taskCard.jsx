@@ -5,7 +5,7 @@ export function TaskCard({
   title,
   description,
   status,
-  dueDate,
+  due_date,
   created_at,
   updated_at,
   deleteTask,
@@ -59,11 +59,11 @@ export function TaskCard({
             <span className="todo-status status-in-progress">{status}</span>
           </div>
           <div className="d-flex flex-column align-items-end">
-            <span className="todo-date">Due: {dueDate}</span>
+            <span className="todo-date">Due: {due_date.split("T")[0]}</span>
             {isUpdated && (
               <>
-                <span className="todo-date">Edited: {updated_at}</span>
-                <span className="todo-date">Created: {created_at}</span>
+                <span className="todo-date">Edited: {updated_at.split("T")[0]}</span>
+                <span className="todo-date">Created: {created_at.split("T")[0]}</span>
               </>
             )}
           </div>
@@ -82,7 +82,7 @@ export function TaskCard({
               <button
                 type="button"
                 className="canvaBtn btn-delete"
-                onClick={() => deleteTask(task_id)}
+                // onClick={() => deleteTask(task_id)}
               >
                 Delete
               </button>
@@ -100,21 +100,19 @@ export function TaskCard({
               <button
                 type="button"
                 className="canvaBtn btn-save"
-                onClick={() => {
-                  const title = titleRef.current.value;
-                  const description = descriptionRef.current.value;
-                  updateTask({
-                    task_id,
-                    title,
-                    description,
-                    status: "just now",
-                    created_at,
-                    dueDate,
-                    updated_at: new Date().toISOString().split("T")[0],
-                  });
-                  setisEditing(false);
-                  setisUpdated(true);
-                }}
+                // onClick={() => {
+                //   const title = titleRef.current.value;
+                //   const description = descriptionRef.current.value;
+                //   updateTask({
+                //     task_id,
+                //     title,
+                //     description,
+                //     status: 'just now',
+                //     updated_at: new Date().toISOString().split("T")[0],
+                //   });
+                //   setisEditing(false);
+                //   setisUpdated(true);
+                // }}
               >
                 💾 save
               </button>

@@ -6,7 +6,7 @@ export function TaskInput({ showTaskForm, setTaskform, addTask }) {
   const statusRef = useRef();
   const created_atRef = useRef();
   const dueDateRef = useRef();
-  const updated_at = "";
+  // const updated_at = "";
   const today = new Date().toISOString().split("T")[0];
 
   const insertTasks = () => {
@@ -14,13 +14,13 @@ export function TaskInput({ showTaskForm, setTaskform, addTask }) {
     const description = descriptionRef.current.value;
     const status = statusRef.current.value;
     const created_at = created_atRef.current.value;
-    const dueDate = dueDateRef.current.value;
-    console.log("taskRef values: ", title, description, dueDate);
+    const due_date = dueDateRef.current.value;
+    console.log("taskRef values: ", title, description, due_date);
     if (!title || !description) {
       alert("try to Fill up all the input fields");
       return;
     }
-    addTask({ task_id:Math.round(Math.random()*21), title, description, status, created_at, dueDate, updated_at });
+    addTask({ title, description, status, created_at, due_date });
     // Clear the form and hide it
     titleRef.current.value = "";
     descriptionRef.current.value = "";
@@ -129,7 +129,7 @@ export function TaskInput({ showTaskForm, setTaskform, addTask }) {
               <button
                 type="button"
                 class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={() => insertTasks()}
+                onClick={insertTasks}
               >
                 Save
               </button>
