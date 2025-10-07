@@ -43,7 +43,7 @@ export function TaskContextProvider({ children }) {
 
   const addTask = async (task) => {
     try {
-      const postResponse = await axios.post("http://localhost:1111/tasks", {
+      const postResponse = await axios.post("http://localhost:1111/tasks/add", {
         task,
       });
       console.log("Task added:", postResponse.data);
@@ -60,9 +60,12 @@ export function TaskContextProvider({ children }) {
 
   const updateTask = async (updatedTask) => {
     try {
-      const editedResponse = await axios.patch(`http://localhost:1111/tasks`, {
-        updatedTask,
-      });
+      const editedResponse = await axios.patch(
+        `http://localhost:1111/tasks/edit`,
+        {
+          updatedTask,
+        }
+      );
       console.log("Task updated:", editedResponse.data);
 
       const getResponse = await axios.get("http://localhost:1111/tasks");
@@ -78,8 +81,8 @@ export function TaskContextProvider({ children }) {
   const deleteTask = async (task_id) => {
     try {
       const url = task_id
-        ? `http://localhost:1111/tasks?task_id=${task_id}`
-        : `http://localhost:1111/tasks`;
+        ? `http://localhost:1111/tasks/delete?task_id=${task_id}`
+        : `http://localhost:1111/tasks/delete`;
       const deleteResponse = await axios.delete(url);
       console.log("Task deleted:", deleteResponse.data);
 
@@ -109,7 +112,7 @@ export function TaskContextProvider({ children }) {
     axios
       .get("http://localhost:1111/tasks")
       .then((response) => {
-        console.log("taskList from api: \n", response.data);
+        console.log("taskList from db: \n", response.data);
         dispatch({
           type: "getTaskList",
           tasks: response.data,
