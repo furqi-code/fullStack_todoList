@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import { TaskContext } from "../store/contextTask";
 
 export function TaskCard({
   task_id,
@@ -8,13 +9,12 @@ export function TaskCard({
   due_date,
   created_at,
   updated_at,
-  deleteTask,
-  updateTask,
 }) {
   const [isEditing, setisEditing] = useState(false);
   const [isUpdated, setisUpdated] = useState(false);
   const titleRef = useRef();
   const descriptionRef = useRef();
+  const {deleteTask, updateTask} = useContext(TaskContext);
   return (
     <>
       <div className="todo-card my-4">

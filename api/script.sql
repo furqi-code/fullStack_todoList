@@ -17,7 +17,6 @@ VALUES ('Sample Task 1', 'Description of task 1', 'pending', '2027-01-09', '2025
 select * from tasks;
 
 DELETE FROM tasks WHERE task_id = 1;
-DELETE FROM tasks;
 
 
 drop database todo_list;

@@ -1,16 +1,15 @@
+import { useContext } from "react";
 import { TaskCard } from "./taskCard";
+import { TaskContext } from "../store/contextTask";
 
-export function ShowTasks({taskList, deleteTask, updateTask}) {
+export function ShowTasks() {
+  const { taskList } = useContext(TaskContext);
   return (
     <>
       <div className="grid grid-cols-3 gap-4">
         {taskList.map((task) => (
           <div>
-            <TaskCard
-              {...task}
-              deleteTask={deleteTask}
-              updateTask={updateTask}
-            ></TaskCard>
+            <TaskCard {...task}></TaskCard>
           </div>
         ))}
       </div>

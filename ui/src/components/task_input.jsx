@@ -1,6 +1,9 @@
 import { useRef } from "react";
+import { useContext } from "react";
+import { TaskContext } from "../store/contextTask";
 
-export function TaskInput({ showTaskForm, setTaskform, addTask }) {
+export function TaskInput({ showTaskForm }) {
+  const { addTask, cancelTaskform } = useContext(TaskContext);
   const titleRef = useRef();
   const descriptionRef = useRef();
   const statusRef = useRef();
@@ -23,7 +26,7 @@ export function TaskInput({ showTaskForm, setTaskform, addTask }) {
     descriptionRef.current.value = "";
     statusRef.current.value = "pending";
     dueDateRef.current.value = "";
-    setTaskform();
+    cancelTaskform();
   };
 
   return (
@@ -123,7 +126,7 @@ export function TaskInput({ showTaskForm, setTaskform, addTask }) {
                 <button
                   type="button"
                   className="text-sm font-semibold text-gray-900 hover:text-gray-700"
-                  onClick={setTaskform}
+                  onClick={cancelTaskform}
                 >
                   Cancel
                 </button>

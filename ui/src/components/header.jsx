@@ -1,9 +1,13 @@
-export function Header({ addTaskBtn, deleteTask }) {
+import { useContext } from "react";
+import { TaskContext } from "../store/contextTask";
+
+export function Header() {
+  const {addTaskBtn, deleteTask} = useContext(TaskContext);
   return (
     <header className="gradient-header">
       <div className="container mx-auto">
         <nav className="glass-nav px-3 py-2 flex flex-wrap justify-between items-center">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-4">
             <div className="logo-container w-8 h-8 rounded-md flex items-center justify-center border border-white/20">
               <svg
                 className="w-5 h-5 text-white"
@@ -13,7 +17,7 @@ export function Header({ addTaskBtn, deleteTask }) {
                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <div className="flex flex-col justify-around items-center">
+            <div>
               <h1 className="text-white text-sm title-shadow leading-tight" style={{ fontSize: "1.875rem" }}>
                 Task Manager
               </h1>
