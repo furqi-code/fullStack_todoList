@@ -1,8 +1,8 @@
+import axios from "axios";
 import { useEffect, useReducer } from "react";
 import { TaskInput } from "./components/task_input";
-import { TaskCard } from "./components/taskCard";
-import axios from "axios";
 import { Header } from "./components/header";
+import { ShowTasks } from "./components/showTasks";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -123,22 +123,20 @@ export function App() {
   } else {
     content =
       state.taskList.length === 0 ? (
-        <h4>Zero task added</h4>
+        <p className="mt-5">Zero task added</p>
       ) : (
-        state.taskList.map((task) => (
-          <TaskCard
-            {...task}
-            deleteTask={deleteTask}
-            updateTask={updateTask}
-          ></TaskCard>
-        ))
+        <ShowTasks
+          taskList={state.taskList}
+          deleteTask={deleteTask}
+          updateTask={updateTask}
+        ></ShowTasks>
       );
   }
 
   return (
     <>
       <Header addTaskBtn={addTaskBtn} deleteTask={deleteTask}></Header>
-      <div>{content}</div>
+      <div className="px-4 py-3 ms-[90px]">{content}</div>
     </>
   );
 }
