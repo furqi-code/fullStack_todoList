@@ -48,6 +48,23 @@ export function App() {
     }
   };
 
+  const updateTask = async (updatedTask) => {
+    try {
+      const editedResponse = await axios.patch(`http://localhost:1111/tasks`, {
+        updatedTask,
+      });
+      console.log("Task updated:", editedResponse.data);
+
+      const getResponse = await axios.get("http://localhost:1111/tasks");
+      dispatch({
+        type: "getTaskList",
+        tasks: getResponse.data,
+      });
+    } catch (err) {
+      console.log("Error editing task: ", err);
+    }
+  };			
+
   const deleteTask = async (task_id) => {
     try {
       const deleteResponse = await axios.delete(
@@ -117,6 +134,7 @@ export function App() {
           <TaskCard
             {...task}
             deleteTask={deleteTask}
+            updateTask={updateTask}	
           ></TaskCard>
         ))
       )}

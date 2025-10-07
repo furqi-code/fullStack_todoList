@@ -50,6 +50,30 @@ app.post("/tasks", async (req, res) => {
   });
 });
 
+app.patch("/tasks", async (req, res) => {
+  try {
+    const { task_id, title, description, status, updated_at } = req.body.updatedTask;
+    let editedTask = await executeQuery(
+      `update tasks set title = ?, description = ?, status = ?, updated_at = ? where task_id = ?`,
+      [title, description, status, updated_at, task_id]
+    );
+    if (editedTask.affectedRows > 0)
+      res.status(200).send(`Task id ${task_id} is updated right now`);
+    else
+      throw {
+        message: `Task id ${task_id} not updated`,
+      };
+  } catch (err) {
+    console.log("error while inserting tasks: ", err);
+    res.status(401).send({
+      message: err.message ? err.message : "Something went wrong",
+    });
+  }
+  res.send({
+    message: `task_id ${updatedTask.task_id} edited succesfully`,
+  });
+});
+
 app.delete("/tasks", async (req, res) => {
   try {
     await executeQuery(`DELETE FROM tasks WHERE task_id = ${req.query.task_id}`);
